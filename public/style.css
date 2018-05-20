@@ -1,0 +1,22 @@
+body{
+    color: white;
+}
+
+.link{
+    color: rgb(245, 156, 83);
+}
+
+
+.gameNews{
+    border-radius: 10px;
+    font-size: 2em;
+}
+
+.view{
+    background-color: rgb(89, 133, 199);
+    color: white;
+    border-radius: 10px;
+    font-size: 1.4em;
+    line-height: 200%;
+}
+
