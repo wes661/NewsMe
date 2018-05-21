@@ -40,41 +40,27 @@ app.get("/scrape", function(req, res){
         var $ = cheerio.load(html);
         // console.log(html);
              
-        // $("div.c-entry-box--compact__image").each(function(i, element){
-        //     var image = $(element).children().attr("src");
-
-        //     db.game_news.insert({
-        //         "image": image
-        //     }, function(err, inserted){
-        //         if(err){
-        //             console.log(err);
-        //         }
-        //         else{
-        //             console.log(inserted);
-        //         }
-        //     })
-        // })
         $("h2.c-entry-box--compact__title").each(function(i, element){
             var link = $(element).children().attr("href");
             var title = $(element).children().text();
 
             // console.log(title);
             // console.log(link);
-           
+            
 
             db.game_news.insert({
                 "title": title,
                 "link": link
-            },
-            {upsert:true}, 
-                function(err, inserted){
-                if(err){
-                    console.log(err);
-                }
-                else {
-                    console.log(inserted); 
-                }
+            }, 
+            function(err, inserted){
+            if(err){
+                console.log(err);
+            }
+            else {
+                console.log(inserted); 
+            }
             })
+            db.game_news.ensureIndex({title: 1}, {unique: true});
         });
     });
   res.send("Scrape Complete");  

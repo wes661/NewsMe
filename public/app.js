@@ -33,4 +33,4 @@ setTimeout(function(){
     $.getJSON("/all", function(stories){
         displayNews(stories);
     })
-},1000)    
+},1300);    
