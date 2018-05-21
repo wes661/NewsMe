@@ -12,10 +12,10 @@ body{
     -webkit-text-stroke: 2px black;
     font-weight: 900;
     color: white;
+    font-family: 'Luckiest Guy', cursive;
 }
 
 .gameNews{
-    background-image: url("https://images8.alphacoders.com/710/710329.jpg");
     background-size: cover;
     text-align: center;
     display: flex;

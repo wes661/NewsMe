@@ -50,7 +50,8 @@ app.get("/scrape", function(req, res){
 
             db.game_news.insert({
                 "title": title,
-                "link": link
+                "link": link,
+                "comments": []
             }, 
             function(err, inserted){
             if(err){
