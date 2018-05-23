@@ -10,10 +10,10 @@ function getRandombg(){
     $(".gameNews").css("background-image", "url(" + randomBg + ")")
 }
 
-function displayNews(news){
+function displayArticles(articles){
     $(".view").empty()
 
-    news.forEach(function(info){
+    articles.forEach(function(info){
         $(".view").append("<div class='block'>" + 
                             "<div class='columns'>" + 
                                 "<div class='column is-12 article'>" + 
@@ -21,7 +21,7 @@ function displayNews(news){
                                 "<div class='columns'>" + 
                                     "<div class='column is-3'>" + "</div>" + 
                                     "<div class='column is-3'>" +
-                                        "<button class='comments button'" + ">Comments <i class='fa fa-comment'></i></button>"+
+                                        "<button class='comments button' data-articleid=" + info._id + ">Comments <i class='fa fa-comment'></i></button>"+
                                     "</div>" + 
                                     "<div class='column is-3'>" +
                                         "<a class='link button' href=" + info.link + ">Full Article <i class='fa fa-file-text'></i></a>"+ 
@@ -31,27 +31,29 @@ function displayNews(news){
                                 "</div>" +                            
                             "</div>" +
                          "</div>" + "<hr>")
-                        // "<div class='modal'>" + 
-                        //     "<div class='modal-background'>" + 
-                        //         "<div class='modal-content'>" + 
-
-                        //         "</div>" +
-                        //     "</div>" +
-                        // "</div>")  
+                       
     });
+
+    function displayComments(comments){
+        alert(comments);
+    }
     $(".comments").click(function(){
-        $.getJSON("/all", function(comments){
-            for(i = 0; i < comments.length; i++){
-                console.log(comments[i].comments);
-            }
-            
+        var articleId = $(this).attr("data-articleid")
+        console.log(articleId);
+        $.ajax({
+            method: "GET",
+            url: "articles/" + articleId
         })
+        .then(function(data){
+            console.log(data);
+        })
+            
+        
     })
 }
 
 $(document).ready(function(){
     getRandombg()
-    console.log(randomBg);
     $.get("/scrape", function(data){
         console.log(data);
        
@@ -59,8 +61,8 @@ $(document).ready(function(){
 })
 setTimeout(function(){
     console.log("done!");
-    $.getJSON("/all", function(stories){
-        displayNews(stories);
+    $.getJSON("/all", function(articles){
+        displayArticles(articles);
     })
 },1100);  
 
