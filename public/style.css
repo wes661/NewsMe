@@ -34,3 +34,11 @@ body{
     line-height: 200%;
 }
 
+.modal-card-body{
+    color: black;
+    -webkit-overflow-scrolling: auto;
+    height: 200px;
+
+}
+
+

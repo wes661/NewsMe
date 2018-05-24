@@ -3,6 +3,8 @@ var bgArray = ["https://images8.alphacoders.com/710/710329.jpg", "https://pre00.
 
 var randomBg;
 
+var articleId;
+
 
 
 function getRandombg(){
@@ -37,8 +39,11 @@ function displayArticles(articles){
     function displayComments(comments){
         alert(comments);
     }
-    $(".comments").click(function(){
-        var articleId = $(this).attr("data-articleid")
+    
+
+    $(".comments").click(function() {
+        $("#comments").empty();
+        articleId = $(this).attr("data-articleid")
         console.log(articleId);
         $.ajax({
             method: "GET",
@@ -46,11 +51,32 @@ function displayArticles(articles){
         })
         .then(function(data){
             console.log(data);
+            $("#comments").append(data.comment._id)
+
         })
-            
-        
+        $(".modal").addClass("is-active");  
+    });
+      
+      $(".delete").click(function() {
+         $(".modal").removeClass("is-active");
+      });
+
+      $(".addComment").click(function(){
+        console.log(articleId);
+        $.ajax({
+            method: "POST",
+            url: "/articles/" + articleId,
+            data: {
+                body: $(".commentBody").val()
+            }
+        })
+        .then(function(data){
+            console.log(data);
+        })
     })
 }
+
+
 
 $(document).ready(function(){
     getRandombg()
@@ -65,4 +91,6 @@ setTimeout(function(){
         displayArticles(articles);
     })
 },1100);  
+
+
 

@@ -1,14 +1,15 @@
 // Dependencies
 var express = require("express");
-// var mongojs = require("mongojs");
 var logger = require("morgan");
 var request = require("request");
 var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var bodyParser = require("body-parser");
 
-var db = require("./models")
+//Requiring exported models as db
+var db = require("./models");
 
+//Port for heoku to use or just use 8080
 var PORT = process.env.PORT || 8080;
 
 // Initialize Express
@@ -30,18 +31,9 @@ else{
     mongoose.connect(databaseUri);
 }
 
-// var databaseUrl = "newsdb";
-// var collections = ["game_news"];
 
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function(error){
-//     console.log("Database Error", error);
-// });
 
-app.get("/", function(req, res){
-    res.send("Get request is working!")
-});
-
+//
 app.get("/all", function(req, res){
     db.Article.find({}, function(error, data){
         if(error) {
@@ -57,7 +49,7 @@ app.get("/all", function(req, res){
 app.get("/scrape", function(req, res){
     request("https://www.theverge.com/games", function(error, response, html){
         var $ = cheerio.load(html);
-        // console.log(html);
+       
              
         $("h2.c-entry-box--compact__title").each(function(i, element){
 
@@ -66,8 +58,6 @@ app.get("/scrape", function(req, res){
                 title : $(element).children().text()
             }
 
-            // console.log(title);
-            // console.log(link);
             
 
             db.Article.create(article)
@@ -88,6 +78,25 @@ app.get("/articles/:id", function(req, res){
     .populate("comment")
     .then(function(dbArticle){
         res.json(dbArticle);
+    })
+    .catch(function(err){
+        res.json(err);
+    });
+});
+
+app.post("/articles/:id", function(req, res){
+    console.log(req.body);
+    db.Comment.create(req.body)
+    .then(function(dbComment){
+        console.log(dbComment);
+        return db.Article.findOneAndUpdate(
+            {_id: req.params.id}, 
+            { commentId: dbComment._id},
+            { comment: req.body},
+            { new: true});
+    })
+    .then(function(dbArticle){
+        res.json
     })
     .catch(function(err){
         res.json(err);
