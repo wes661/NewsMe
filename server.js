@@ -21,7 +21,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //Data base info
-mongoose.connect("mongodb://localhost/game_news");
+var databaseUri = "mongodb://localhost/game_news"
+
+if(process.env.MONGODB_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+}
+else{
+    mongoose.connect(databaseUri);
+}
+
 // var databaseUrl = "newsdb";
 // var collections = ["game_news"];
 
