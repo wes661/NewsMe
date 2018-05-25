@@ -75,7 +75,7 @@ app.get("/scrape", function(req, res){
 
 app.get("/articles/:id", function(req, res){
     db.Article.findOne({_id: req.params.id})
-    .populate("comment")
+    .populate("comments")
     .then(function(dbArticle){
         res.json(dbArticle);
     })
@@ -85,20 +85,23 @@ app.get("/articles/:id", function(req, res){
 });
 
 app.post("/articles/:id", function(req, res){
+    // console.log(req.body);
     console.log(req.body);
     db.Comment.create(req.body)
     .then(function(dbComment){
-        console.log(dbComment);
+        // console.log(dbComment);
         return db.Article.findOneAndUpdate(
             {_id: req.params.id}, 
-            { commentId: dbComment._id},
-            { comment: req.body},
-            { new: true});
+            {$push:{comments: dbComment._id}},
+            { new: true})
+            .populate('comments');
     })
     .then(function(dbArticle){
-        res.json
+        console.log(dbArticle);
+        res.json(dbArticle);
     })
     .catch(function(err){
+        console.log(err);
         res.json(err);
     });
 });

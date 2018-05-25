@@ -15,6 +15,8 @@ function getRandombg(){
 function displayArticles(articles){
     $(".view").empty()
 
+    
+
     articles.forEach(function(info){
         $(".view").append("<div class='block'>" + 
                             "<div class='columns'>" + 
@@ -26,8 +28,8 @@ function displayArticles(articles){
                                         "<button class='comments button' data-articleid=" + info._id + ">Comments <i class='fa fa-comment'></i></button>"+
                                     "</div>" + 
                                     "<div class='column is-3'>" +
-                                        "<a class='link button' href=" + info.link + ">Full Article <i class='fa fa-file-text'></i></a>"+ 
-                                    "</div>" + 
+                                        `<a class='link button' href=  ${info.link}  target='_blank'>Full Article <i class='fa fa-file-text'></i></a> 
+                                    </div>` + 
                                     "<div class='column is-3'>" + "</div>" +   
                                 "</div>" +    
                                 "</div>" +                            
@@ -39,6 +41,8 @@ function displayArticles(articles){
     function displayComments(comments){
         alert(comments);
     }
+
+    
     
 
     $(".comments").click(function() {
@@ -51,7 +55,9 @@ function displayArticles(articles){
         })
         .then(function(data){
             console.log(data);
-            $("#comments").append(data.comment._id)
+            for(let i =0; i<data.comments.length;i++ ){
+            $("#comments").append(data.comments[i].comment);
+            }
 
         })
         $(".modal").addClass("is-active");  
@@ -67,11 +73,16 @@ function displayArticles(articles){
             method: "POST",
             url: "/articles/" + articleId,
             data: {
-                body: $(".commentBody").val()
+                comment: $(".commentBody").val()
             }
         })
         .then(function(data){
+        $("#comments").empty();
             console.log(data);
+            for(let i =0; i<data.comments.length;i++ ){
+            $("#comments").append(data.comments[i].comment);
+            }
+            $(".commentBody").val('');
         })
     })
 }
