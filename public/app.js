@@ -18,7 +18,7 @@ function displayArticles(articles){
     
 
     articles.forEach(function(info){
-        $(".view").prepend("<div class='block'>" + 
+        $(".view").append("<div class='block'>" + 
                             "<div class='columns'>" + 
                                 "<div class='column is-12 article'>" + 
                                     "<h1>" + info.title + "</h1>" +
