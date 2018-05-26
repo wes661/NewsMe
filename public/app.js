@@ -18,7 +18,7 @@ function displayArticles(articles){
     
 
     articles.forEach(function(info){
-        $(".view").append("<div class='block'>" + 
+        $(".view").prepend("<div class='block'>" + 
                             "<div class='columns'>" + 
                                 "<div class='column is-12 article'>" + 
                                     "<h1>" + info.title + "</h1>" +
@@ -56,7 +56,7 @@ function displayArticles(articles){
         .then(function(data){
             console.log(data);
             for(let i =0; i<data.comments.length;i++ ){
-            $("#comments").append(`<div class='commentView'><strong>${data.comments[i].name}</strong> <br> ${data.comments[i].comment}</div>
+            $("#comments").prepend(`<div class='commentView'><strong>${data.comments[i].name}</strong> <br> ${data.comments[i].comment}</div>
             <hr>`);
             }
 
@@ -82,10 +82,11 @@ function displayArticles(articles){
         $("#comments").empty();
             console.log(data);
             for(let i =0; i<data.comments.length;i++ ){
-            $("#comments").append(`<div class='commentView'><strong>${data.comments[i].name}</strong> <br> ${data.comments[i].comment}</div>
+            $("#comments").prepend(`<div class='commentView'><strong>${data.comments[i].name}</strong> <br> ${data.comments[i].comment}</div>
             <hr>`);
             }
             $(".commentBody").val('');
+            $(".commentName").val('');
         })
     })
 }
