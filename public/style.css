@@ -37,8 +37,9 @@ body{
 .modal-card-body{
     color: black;
     -webkit-overflow-scrolling: auto;
-    height: 200px;
-
+    height: 700px;
 }
 
-
+.labelName{
+    color: black;
+}

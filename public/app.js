@@ -56,7 +56,8 @@ function displayArticles(articles){
         .then(function(data){
             console.log(data);
             for(let i =0; i<data.comments.length;i++ ){
-            $("#comments").append(data.comments[i].comment);
+            $("#comments").append(`<div class='commentView'><strong>${data.comments[i].name}</strong> <br> ${data.comments[i].comment}</div>
+            <hr>`);
             }
 
         })
@@ -73,6 +74,7 @@ function displayArticles(articles){
             method: "POST",
             url: "/articles/" + articleId,
             data: {
+                name: $(".commentName").val(),
                 comment: $(".commentBody").val()
             }
         })
@@ -80,7 +82,8 @@ function displayArticles(articles){
         $("#comments").empty();
             console.log(data);
             for(let i =0; i<data.comments.length;i++ ){
-            $("#comments").append(data.comments[i].comment);
+            $("#comments").append(`<div class='commentView'><strong>${data.comments[i].name}</strong> <br> ${data.comments[i].comment}</div>
+            <hr>`);
             }
             $(".commentBody").val('');
         })
@@ -101,7 +104,7 @@ setTimeout(function(){
     $.getJSON("/all", function(articles){
         displayArticles(articles);
     })
-},1100);  
+},1200);  
 
 
 
