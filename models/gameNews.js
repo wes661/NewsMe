@@ -1,3 +1,4 @@
+//Model for articles to be stored
 var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema 
@@ -15,6 +16,7 @@ var gameArticleSchema = new Schema({
         required: true
     },
     
+    //relation to comments model
     comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment"

@@ -1,3 +1,4 @@
+//Model for commentins on articles to be stored
 var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
