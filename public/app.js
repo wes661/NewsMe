@@ -10,7 +10,7 @@ function getRandombg(){
 }
 //---------------------------
 
-//variable to be referenced for viewing comments and writinf comments
+//variable to be referenced for viewing comments and writing comments
 var articleId;
 
 
